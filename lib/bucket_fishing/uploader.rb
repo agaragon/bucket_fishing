@@ -3,14 +3,15 @@ require 'aws-sdk-s3'
 
 module BucketFishing
   class Uploader
-    def initialize(bucket_name, aws_credentials = {})
+    def initialize(bucket_name, aws_credentials = {}, endpoint_url = nil)
       @bucket_name = bucket_name
       @s3_client = Aws::S3::Client.new(
         region: aws_credentials[:region] || 'us-east-1',
         credentials: Aws::Credentials.new(
           aws_credentials[:access_key_id] || ENV['AWS_ACCESS_KEY_ID'],
           aws_credentials[:secret_access_key] || ENV['AWS_SECRET_ACCESS_KEY']
-        )
+        ),
+        endpoint: endpoint_url
       )
     end
 
